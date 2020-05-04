@@ -22,7 +22,7 @@ public:
             if(hash.find(nums1[i])==hash.end()) nums1[i]=-1;
             else nums1[i]=hash[nums1[i]];
         }
-        
+       
         return nums1;
     }
 };
