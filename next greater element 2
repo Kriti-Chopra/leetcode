@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& arr) {
+        int n=arr.size();
+        vector<int> ans(n,-1);
+        stack<int> mstack;
+        
+        // while we have smaller number in the iteration as compared to stack top
+        //we will add that in order to find number larger to it
+        //if larger is found keep on removing until it remains larger so that smaller is now exposed
+        
+        for(int j=2*n-1;j>=0;--j){
+            int i=j%n;
+            // if(!mstack.empty() && arr[i]<arr[mstack.top()]){
+            //     mstack.push(i);    
+            // }
+            //else{
+                while(!mstack.empty() && arr[i]>=arr[mstack.top()]){
+                    //ans[mstack.top()]=arr[i];
+                    //not doing here bcoz then it will update from end of the array
+                    mstack.pop();
+                }
+                // cout<<mstack.top();
+                // if(mstack.empty() || (!mstack.empty() && mstack.top()!=i)) 
+                //     mstack.push(i);
+                if(!mstack.empty()) ans[i]=arr[mstack.top()];
+                mstack.push(i);
+            //}
+        }
+        
+        return ans;
+    }
+};
