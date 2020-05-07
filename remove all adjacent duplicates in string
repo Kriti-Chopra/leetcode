@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string removeDuplicates(string S) {
+        stack<char> mstack;
+        int i=0;
+        while(i<S.length()){
+            if(!mstack.empty() && S[i]==mstack.top()) mstack.pop();
+            else mstack.push(S[i]);
+            ++i;
+        }
+        
+        string ans="";
+        while(!mstack.empty()){
+            ans=mstack.top()+ans;
+            mstack.pop();
+        }
+        return ans;
+    }
+};
