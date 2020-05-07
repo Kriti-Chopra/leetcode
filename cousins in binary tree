@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    bool siblings(TreeNode* root,int x,int y){
+        if(root==NULL) return false;
+        //cout<<"here";
+        if(root->left!=NULL && root->right!=NULL && root->left->val==x && root->right->val==y) return true;
+        if(root->left!=NULL && root->right!=NULL && root->right->val==x && root->left->val==y) return true;
+        if(siblings(root->left,x,y) || siblings(root->right,x,y)) return true;
+        return false;
+    }
+    
+    int level(TreeNode* root,int x,int cur){
+        if(root==NULL) return 0;
+        if(root->val==x) return cur;
+        
+        int l=level(root->left,x,cur+1);
+        if(l!=0) return l;
+        return level(root->right,x,cur+1);
+    }
+    
+    bool isCousins(TreeNode* root, int x, int y) {
+        //are cousins if they don't have same parents
+        //that is they are not siblings
+        //and they are at the same level
+        //cout<<siblings(root,x,y)<<" ";
+        if(level(root,x,1)==level(root,y,1) && !siblings(root,x,y)) return true;
+        return false;
+    }
+};
