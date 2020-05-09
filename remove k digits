@@ -1,0 +1,42 @@
+class Solution {
+public:
+    string removeKdigits(string num, int k) {
+        stack<char> mstack;
+        if(k==num.length()) return "0";
+        
+        int i=0;
+        while(i<num.length() && k){
+            while(!mstack.empty() && num[i]<mstack.top() && k){
+                //replace the top
+                mstack.pop();
+                --k;
+            }
+            mstack.push(num[i]);
+            ++i;
+        }
+        
+        
+        while(i<num.length()){
+            mstack.push(num[i]);
+            ++i;
+        }
+        
+        string ans="";
+        while(!mstack.empty()){
+            if(k){
+                --k;
+            }
+            else ans=mstack.top()+ans;
+            mstack.pop();
+        }
+        
+        
+        //remove zeroes
+        while(ans.length()>1 && ans[0]=='0'){
+            ans=ans.substr(1);
+        }
+        
+        // if(ans=="") return "0";
+        return ans;
+    }
+};
