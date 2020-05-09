@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int convertToint(string str){
+        int num=0;
+        int i=0;
+        bool neg=false;
+        while(i<str.length()){
+            if(str[i]=='-') neg=true;
+            else num=num*10+(str[i]-'0');
+            ++i;
+        }
+        if(neg) num*=-1;
+        //cout<<endl<<str<<" "<<num<<endl;
+        return num;
+    }
+    
+    int calPoints(vector<string>& ops) {
+        int i=0;
+        stack<int> mstack;
+        
+        while(i<ops.size()){
+            if(ops[i]=="C" && !mstack.empty()) mstack.pop();
+            else if(ops[i]=="D" && !mstack.empty()) mstack.push(mstack.top()*2);
+            else if(ops[i]=="+" && mstack.size()>1){
+                int first=mstack.top();
+                mstack.pop();
+                int sum=first+mstack.top();
+                //cout<<endl<<first<<" "<<mstack.top()<<endl;
+                mstack.push(first);
+                mstack.push(sum);
+            }
+            else{
+                //convert string to integer an then push
+                mstack.push(convertToint(ops[i]));
+            }
+            ++i;
+        }
+        
+        int sum=0;
+        while(!mstack.empty()){
+            cout<<mstack.top()<<" ";
+            sum+=mstack.top();
+            mstack.pop();
+        }
+        return sum;
+    }
+};
