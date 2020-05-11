@@ -1,0 +1,27 @@
+class Solution {
+public:
+    
+    void recur(vector<vector<int>> &image,int sr,int sc,int val,int row,int col, int newC){
+        
+        if(sr>=row || sc>=col) return;
+        if(sr<0 || sc<0) return;
+        
+        if(image[sr][sc]==val){
+            image[sr][sc]=newC;
+            
+            //check 4 directions
+            if(sc+1<col) recur(image,sr,sc+1,val,row,col,newC);
+            if(sc-1>=0) recur(image,sr,sc-1,val,row,col,newC);
+            if(sr+1<row) recur(image,sr+1,sc,val,row,col,newC);
+            if(sr-1>=0) recur(image,sr-1,sc,val,row,col,newC);
+        }
+    }
+    
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        
+        int row=image.size();
+        int col=image[0].size();
+        if(image[sr][sc]!=newColor) recur(image,sr,sc,image[sr][sc],row,col,newColor);
+        return image;
+    }
+};
