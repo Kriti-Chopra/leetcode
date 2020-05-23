@@ -1,0 +1,51 @@
+class Solution {
+public:
+    vector<vector<int>> intervalIntersection(vector<vector<int>>& A, vector<vector<int>>& B) {
+        
+        // find current valid range that can intersect
+        int i=0,j=0;
+        vector<vector<int>> ans;
+        while(i<A.size() && j<B.size()){
+            // cout<<"A"<<A[i][0]<<" "<<A[i][1];
+            // cout<<"B"<<B[j][0]<<" "<<A[j][1];
+
+            int lower=max(A[i][0],B[j][0]);
+            int higher=min(A[i][1],B[j][1]);
+            
+            if(lower<=higher){
+                vector<int> reff(2,0);
+                reff[0]=lower; reff[1]=higher;
+                ans.push_back(reff);   
+            }
+            
+            if(A[i][1]<B[j][1]) ++i;
+            else ++j;
+        }
+        
+        return ans;
+        
+        
+        
+        
+        
+        
+        // n^2 approach
+//         //find the largest ele
+//         int maxc=INT_MIN;
+//         for(int i=0;i<A.size();++i){
+//             for(int j=0;j<A[i].size();++j){
+//                 maxc=max(maxc,A[i][j]);
+//             }
+//         }
+//         for(int i=0;i<B.size();++i){
+//             for(int j=0;j<B[i].size();++j){
+//                 maxc=max(maxc,B[i][j]);
+//             }
+//         }
+        
+//         //create arr of that size
+//         vector<int> arr(maxc,0);
+//         //set all the ele
+        
+    }
+};
