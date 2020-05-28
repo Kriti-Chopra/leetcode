@@ -1,0 +1,49 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        bool even=false;
+        int mid=0;
+        if((nums1.size()+nums2.size())%2==0) {
+            even=true;
+            mid=((nums1.size()+nums2.size())/2)-1;
+        }
+        else mid=(nums1.size()+nums2.size())/2;
+        
+        int count=-1;
+        int i=0,j=0;
+        int val=0;
+        while(count<mid && i<nums1.size() && j<nums2.size()){
+            ++count;
+            if(count==mid) val=min(nums1[i],nums2[j]);
+            if(nums1[i]<=nums2[j]) ++i;
+            else ++j;
+        }
+        
+        while(count<mid && i<nums1.size()){
+            ++count;
+            if(count==mid) val=nums1[i];
+            ++i;
+        }
+         // cout<<j<<" ";
+        
+        while(count<mid && j<nums2.size()){
+            ++count;
+            if(count==mid) val=nums2[j];
+            ++j;
+        }
+        
+        if(!even) return val;
+        // cout<<i<<" "<<j<<endl;
+        
+        //find next one
+        double next=0;
+        if(i<nums1.size() && j<nums2.size()) next=min(nums1[i],nums2[j]);
+        else if(i<nums1.size()) next=nums1[i];
+        else next=nums2[j];
+        
+        cout<<val<<" "<<next<<endl;
+        double ans=(val+next)/2;
+        return ans;
+        
+    }
+};
