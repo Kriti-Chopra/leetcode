@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    int maxPath(TreeNode* root, int& overallMax){
+        if(root==NULL) return 0;
+        
+        //cases for max
+        //l or r+ root --or-- only root --or-- both l+r+root
+        //find curmax to know cur state
+        //curStart for the node where previous are not taken into sum
+        
+        int curMax=0,curStart=0;
+        int l=maxPath(root->left,overallMax);
+        int r=maxPath(root->right,overallMax);
+        
+        curMax=max(max(l,r)+root->val,root->val);
+        curStart=max(curMax,l+r+root->val);
+        
+        overallMax=max(overallMax,curStart);
+        return curMax;
+        
+    }
+    
+    int maxPathSum(TreeNode* root) {
+        int overallMax=INT_MIN;
+        maxPath(root,overallMax);
+        return overallMax;
+    }
+};
